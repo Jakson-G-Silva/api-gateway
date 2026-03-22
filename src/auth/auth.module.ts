@@ -2,9 +2,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// JWT para autenticação baseada em tokens
 import { JwtModule } from '@nestjs/jwt';
-// Passport para estratégias de autenticação (JWT, OAuth, etc)
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './service/auth.service';
 
@@ -28,7 +26,6 @@ import { AuthService } from './service/auth.service';
       inject: [ConfigService],
     }),
   ],
-  // Módulos exportados para outros módulos (vazio = apenas uso interno)
   exports: [],
   // Provedores do módulo (serviços)
   providers: [AuthService],

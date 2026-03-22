@@ -1,15 +1,9 @@
-// Cliente HTTP para requisições
 import { HttpService } from '@nestjs/axios';
-// Decoradores e exceções do NestJS
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-// Serviço JWT para validação de tokens
 import { JwtService } from '@nestjs/jwt';
-// Converte observáveis RxJS em promessas
 import { firstValueFrom } from 'rxjs';
-// Configuração dos microserviços
 import { serviceConfig } from '../../config/gateway.config';
 
-// Interface: Define estrutura da sessão do usuário
 export interface UserSession {
   valid: boolean;
   user: {
@@ -26,9 +20,7 @@ export interface UserSession {
 @Injectable()
 export class AuthService {
   constructor(
-    // Injeta JWT para validar tokens
     private readonly jwtService: JwtService,
-    // Injeta HTTP para chamar serviço de usuários
     private readonly httpService: HttpService,
   ) {}
 
