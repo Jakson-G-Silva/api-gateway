@@ -26,7 +26,7 @@ import { AuthService } from './service/auth.service';
       inject: [ConfigService],
     }),
   ],
-  exports: [],
+  exports: [AuthService],
   // Provedores do módulo (serviços)
   providers: [AuthService],
 })
