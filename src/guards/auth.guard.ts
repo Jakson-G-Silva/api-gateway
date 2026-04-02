@@ -7,23 +7,20 @@ import type { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 
-// Instância do guard JWT de Passport
 const JwtGuard = AuthGuard('jwt');
 
-/**
- * Guard de autenticação JWT que valida tokens.
- * Permite saltar validação para rotas públicas usando o decorador @Public()
- */
+interface JwtUser {
+  userId: string;
+  email: string;
+  role: string;
+}
+
 @Injectable()
 export class JwtAuthGuard extends JwtGuard {
   constructor(private reflector: Reflector) {
     super();
   }
 
-  /**
-   * Valida se a rota é pública. Se for, omite autenticação.
-   * Caso contrário, executa a validação JWT padrão.
-   */
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -39,15 +36,17 @@ export class JwtAuthGuard extends JwtGuard {
     return super.canActivate(context);
   }
 
-  /**
-   * Gerencia o resultado da autenticação.
-   * Lança exceção se houver erro ou usuário não existir.
-   */
-  handleRequest(err: any, user: any, info: any) {
+  handleRequest<TUser = JwtUser>(
+    err: Error | null,
+    user: JwtUser | false,
+    _info: unknown,
+    _context: ExecutionContext,
+    status?: unknown,
+  ): TUser {
     if (err || !user) {
       throw err || new UnauthorizedException();
     }
 
-    return user;
+    return user as TUser;
   }
 }
