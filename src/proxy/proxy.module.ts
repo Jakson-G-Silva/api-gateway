@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ProxyService } from './service/proxy.service';
 import { HttpModule } from '@nestjs/axios';
+import { FallbackModule } from '../common/fallback/fallback.module';
 import { CircuitBreakerModule } from '../common/circuit-breaker/circuit-breaker.module';
 
 @Module({
-  imports: [HttpModule, CircuitBreakerModule],
+  imports: [HttpModule, CircuitBreakerModule, FallbackModule],
   providers: [ProxyService],
   exports: [ProxyService],
 })
